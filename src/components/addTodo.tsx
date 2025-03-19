@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import axios from "axios";
 
 interface AddTodoProps {
@@ -9,6 +9,13 @@ const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
   const [showForm, setShowForm] = useState(false);
   const [newTodo, setNewTodo] = useState('');
   const apiUrl = import.meta.env.VITE_API_URL;
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    if (showForm && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [showForm]);
 
   const addTodo = async () => {
     try {
@@ -58,6 +65,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
           >
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Todo</h2>
             <input
+              ref={inputRef}
               type="text"
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
