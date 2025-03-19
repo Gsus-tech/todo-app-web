@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';  // <-- Added `useRef`
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
+import { FaSpinner } from "react-icons/fa";
 
 interface Todo {
   _id: string;
@@ -12,16 +13,20 @@ const KanbanBoard: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([]); // To hold the list of todo items
   const [showActions, setShowActions] = useState<string | null>(null); // To show actions menu
   const [movingTodo, setMovingTodo] = useState<string | null>(null); // To add effect when moving
+  const [loading, setLoading] = useState<boolean>(true);  // Adds a loading... message when fetching
   const menuRef = useRef<HTMLDivElement | null>(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
+        setLoading(true);
         const response = await axios.get<Todo[]>(`${apiUrl}`);
         setTodos(response.data);
       } catch (error) {
         console.error("Error fetching todos:", error);
+      }finally {
+        setLoading(false);
       }
     };
 
@@ -29,9 +34,11 @@ const KanbanBoard: React.FC = () => {
   }, []);
 
   const refreshTodos = () => {
+    setLoading(true);
     axios.get<Todo[]>(`${apiUrl}`)
       .then((res) => setTodos(res.data))
-      .catch((error) => console.error("Error refreshing todos:", error));
+      .catch((error) => console.error("Error refreshing todos:", error))
+      .finally(() => setLoading(false)); 
   };
 
   const updateStatus = async (id: string, newStatus: "todo" | "in-progress" | "completed") => {
@@ -110,6 +117,11 @@ const KanbanBoard: React.FC = () => {
   const renderColumn = (title: string, status: "todo" | "in-progress" | "completed") => (
     <div className="bg-white rounded-lg shadow-md p-6 w-full">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">{title}</h2>
+      {loading ? (  // <-- Display loading spinner
+        <div className="text-center text-gray-500">
+          <FaSpinner className="animate-spin m-auto text-2xl" />
+        </div>
+      ) : (
       <div className="space-y-4">
         {todos
           .filter((todo) => todo.status === status)
@@ -135,6 +147,7 @@ const KanbanBoard: React.FC = () => {
             </div>
           ))}
       </div>
+      )}
     </div>
   );
 
