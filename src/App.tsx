@@ -23,6 +23,11 @@ const App: React.FC = () => {
           <KanbanBoard key={refresh ? "refresh" : "no-refresh"} />
         </div>
       </main>
+        <div className="hidden md:block lg:block xl:block text-center text-gray-500 text-sm mt-4">
+          Developed with <span className="font-semibold">React + Vite</span> and <span className="font-semibold">TailwindCSS</span>, 
+          deployed with <span className="font-semibold">Vercel</span> using <span className="font-semibold">MongoDB Atlas</span> + 
+          <span className="font-semibold"> Render</span> for the backend.
+        </div>
 
       <Footer />
     </div>
