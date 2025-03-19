@@ -13,11 +13,12 @@ const KanbanBoard: React.FC = () => {
   const [showActions, setShowActions] = useState<string | null>(null); // To show actions menu
   const [movingTodo, setMovingTodo] = useState<string | null>(null); // To add effect when moving
   const menuRef = useRef<HTMLDivElement | null>(null);
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const fetchTodos = async () => {
       try {
-        const response = await axios.get<Todo[]>("http://localhost:5000/api/todos");
+        const response = await axios.get<Todo[]>(`${apiUrl}`);
         setTodos(response.data);
       } catch (error) {
         console.error("Error fetching todos:", error);
@@ -28,7 +29,7 @@ const KanbanBoard: React.FC = () => {
   }, []);
 
   const refreshTodos = () => {
-    axios.get<Todo[]>("http://localhost:5000/api/todos")
+    axios.get<Todo[]>(`${apiUrl}`)
       .then((res) => setTodos(res.data))
       .catch((error) => console.error("Error refreshing todos:", error));
   };
@@ -37,7 +38,7 @@ const KanbanBoard: React.FC = () => {
     try {
       setMovingTodo(id);
 
-      await axios.put(`http://localhost:5000/api/todos/${id}`, { status: newStatus });
+      await axios.put(`${apiUrl}${id}`, { status: newStatus });
       refreshTodos();
       toggleActions(id);
       
@@ -51,7 +52,7 @@ const KanbanBoard: React.FC = () => {
 
   const deleteTodo = async (id: string) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todos/${id}`);
+      await axios.delete(`${apiUrl}${id}`);
       refreshTodos();
     } catch (error) {
       console.error("Error deleting todo:", error);
