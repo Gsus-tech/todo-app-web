@@ -1,7 +1,7 @@
 # Todo App Web
 
 ## Description:
-This project demonstrates the development of a React frontend using Vite to create a fast, modern user interface for managing tasks. It interacts with a backend API to perform CRUD operations on tasks.
+This project demonstrates the development of a React frontend using Vite to create a user interface for managing tasks. It interacts with a backend API to perform CRUD operations on tasks.
 
 ## Key Features:
 - **Responsive UI:**  
