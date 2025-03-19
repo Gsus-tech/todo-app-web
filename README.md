@@ -20,21 +20,21 @@ Follow the instructions below to set up the project on your local machine and ge
 
 ### **INSTALLATION PROCESS GUIDE**
 
-1.  **Clone the repository:**
+1.  **Clone the repository:**<br>
 `git clone https://github.com/Gsus-tech/todo-app-web`
 
-2. **Navigate into the project directory:**
+2. **Navigate into the project directory:**<br>
 `cd todo-app-web`
 
-3. **Install the dependencies (I used npm, you can use whatever you prefer):**
+3. **Install the dependencies (I used npm, you can use whatever you prefer):**<br>
 `npm install` 
 <br>or<br>
 `yarn install` 
 
-4. **Create a .env file in the root directory (if it doesn’t exist already) and add the URL of the backend API:**
+4. **Create a .env file in the root directory (if it doesn’t exist already) and add the URL of the backend API:**<br>
 `VITE_API_URL=http://localhost:5000/api/todos/`
 
-5. **And thats it! Now just run the application and test it:**
+5. **And thats it! Now just run the application and test it:**<br>
 `npm run dev` 
 <br>or<br>
 `yarn dev` 
