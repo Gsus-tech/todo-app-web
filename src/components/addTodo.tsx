@@ -8,12 +8,13 @@ interface AddTodoProps {
 const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
   const [showForm, setShowForm] = useState(false);
   const [newTodo, setNewTodo] = useState('');
+  const apiUrl = import.meta.env.VITE_API_URL;
 
   const addTodo = async () => {
     try {
       if (newTodo.trim()) {
         // Send the new task 'ToDo' to the backend
-        const response = await axios.post('http://localhost:5000/api/todos', {
+        const response = await axios.post(`${apiUrl}`, {
           text: newTodo,
           status: 'todo', // The default status is going to be 'To Do'
         });
