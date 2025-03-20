@@ -10,6 +10,27 @@ const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
   const [newTodo, setNewTodo] = useState('');
   const apiUrl = import.meta.env.VITE_API_URL;
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Condition width
+    const checkMobile = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobile(true);
+      } else {
+        setIsMobile(false);
+      }
+    };
+
+    // Check on initial load
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
+
 
   useEffect(() => {
     if (showForm && inputRef.current) {
@@ -60,7 +81,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
         >
           {/* Modal Content */}
           <div
-            className="bg-white p-6 rounded-lg shadow-lg w-1/3"
+            className={`${isMobile ? 'w-3/4' : 'w-1/3'} grid bg-white p-6 rounded-lg shadow-lg`}
             onClick={(e) => e.stopPropagation()} // Prevent closing modal when clicking inside the form
           >
             <h2 className="text-xl font-semibold text-gray-700 mb-4">Add Todo</h2>
@@ -72,7 +93,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
               placeholder="Enter a new task"
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 mb-4"
             />
-            <div className="flex justify-between">
+            <div className={`flex justify-between`}>
               <button
                 onClick={addTodo}
                 className="bg-indigo-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-indigo-700"
