@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import AddTodo from "./components/addTodo";
-import KanbanBoard from "./components/kanbanBoard";
+import KanbanBoard from "./components/taskBoard";
 
 const App: React.FC = () => {
   const [refresh, setRefresh] = useState(false);
