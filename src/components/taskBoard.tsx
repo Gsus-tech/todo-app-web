@@ -72,36 +72,28 @@ const KanbanBoard: React.FC = () => {
 
   const renderActionButtons = (todo: Todo) => (
     <div ref={menuRef} className="absolute right-2 top-10 bg-white shadow-lg rounded-md p-4 z-10 border border-gray-200">
-      {todo.status === "todo" && (
+      {todo.status !== "todo" && (
         <button
-          onClick={() => updateStatus(todo._id, "in-progress")}
-          className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-blue-600"
+          onClick={() => updateStatus(todo._id, "todo")}
+          className="block w-full text-left px-4 py-2 hover:bg-yellow-50 text-yellow-600 mb-1"
         >
-          Mark as In Progress
+          Mark as To Do
         </button>
       )}
-      {todo.status === "in-progress" && (
-        <>
+      {todo.status !== "in-progress" && (
           <button
-            onClick={() => updateStatus(todo._id, "todo")}
-            className="block w-full text-left px-4 py-2 hover:bg-yellow-50 text-yellow-600 mb-1"
+            onClick={() => updateStatus(todo._id, "in-progress")}
+            className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-blue-600 mb-1"
           >
-            Mark as To Do
+            Mark as In Progress
           </button>
-          <button
-            onClick={() => updateStatus(todo._id, "completed")}
-            className="block w-full text-left px-4 py-2 hover:bg-green-50 text-green-600"
-          >
-            Mark as Completed
-          </button>
-        </>
       )}
-      {todo.status === "completed" && (
+      {todo.status !== "completed" && (
         <button
-          onClick={() => updateStatus(todo._id, "in-progress")}
-          className="block w-full text-left px-4 py-2 hover:bg-blue-50 text-blue-600"
+          onClick={() => updateStatus(todo._id, "completed")}
+          className="block w-full text-left px-4 py-2 hover:bg-green-50 text-green-600 mb-1"
         >
-          Mark as In Progress
+          Mark as Completed
         </button>
       )}
       <hr className="my-2" />
