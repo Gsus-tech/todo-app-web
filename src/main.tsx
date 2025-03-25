@@ -8,17 +8,11 @@ import Login from './components/login';
 import Signup from './components/signup';
 import './index.css';
 
-const isAuthenticated = () => {
-  const token = localStorage.getItem('token');
-  return !!token;
-};
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Router>
       <Routes>
-      <Route path="/" element={isAuthenticated() ? 
-          <App /> : <Navigate to="/login" />}  />
+      <Route path="/" element= {<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/sign-up" element={<Signup />} />
         <Route path="*" element={<NotFound />} />
