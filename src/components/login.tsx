@@ -3,21 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setIsAuthenticated(true);
       setTimeout(() => navigate("/"), 0);
-    } else {
-      setIsAuthenticated(false);
     }
   }, [navigate]);
-
-    if (!isAuthenticated) {
-      return null;
-    }
   
   const [formData, setFormData] = useState({
     email: '',
