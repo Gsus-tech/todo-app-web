@@ -1,7 +1,7 @@
 // main.tsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import App from './App';
 import NotFound from './components/404';
 import Login from './components/login';
