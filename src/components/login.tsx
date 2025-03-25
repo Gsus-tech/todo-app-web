@@ -1,8 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        navigate("/");
+      } else {
+        setIsAuthenticated(true);
+      }
+    }, [navigate]);
+
+    if (!isAuthenticated) {
+      return null;
+    }
   
   const [formData, setFormData] = useState({
     email: '',
@@ -20,12 +34,11 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);  // Set loading to true when the form is submitting
-    setError(null);    // Reset error message
+    setLoading(true);
+    setError(null);
 
     try {
-        // Prepare the form data to send to the backend
-        const response = await fetch(`${apiUrl}`, {
+        const response = await fetch(`${apiUrl}login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,26 +46,34 @@ const Login = () => {
             body: JSON.stringify(formData),
         });
 
+        const data = await response.json();  // Get the server response
+
         if (!response.ok) {
-            throw new Error('Invalid email or password');
+            // Display the backend error message
+            setError(data.message || 'An unexpected error occurred.');
+            return;
         }
 
-        // If successful, navigate to the dashboard or another page
-        const result = await response.json();
-        console.log('Login successful:', result);
+        console.log('Login successful:');
+        console.log('token:', data.token);
+        
+        // Save the token to localStorage or sessionStorage
+        localStorage.setItem('token', data.token);
+
         navigate('/');
 
     } catch (error: unknown) {
         if (error instanceof Error) {
             console.error('Login failed:', error.message);
-            setError(error.message);
+            setError('Network error or server not responding');
         } else {
             setError('An unexpected error occurred.');
         }
-    }  finally {
-        setLoading(false);  // Set loading to false when done
+    } finally {
+        setLoading(false);
     }
-};
+  };
+
 
 
   return (

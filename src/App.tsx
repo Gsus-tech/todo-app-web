@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "./components/footer";
 import Header from "./components/header";
 import AddTodo from "./components/addTodo";
@@ -6,11 +7,26 @@ import KanbanBoard from "./components/taskBoard";
 
 const App: React.FC = () => {
   const [refresh, setRefresh] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");  // Redirect to login if no token
+    } else {
+      setIsAuthenticated(true);
+    }
+  }, [navigate]);
 
   const handleTodoAdded = () => {
     setRefresh((prev) => !prev); // Trigger a refresh after adding a todo
   };
 
+  if (!isAuthenticated) {
+    return null; // Prevent rendering before authentication check
+  }
+  
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col w-full">
       <Header />
