@@ -8,7 +8,7 @@ interface AddTodoProps {
 const AddTodo: React.FC<AddTodoProps> = ({ addNewTodo }) => {
   const [showForm, setShowForm] = useState(false);
   const [newTodo, setNewTodo] = useState('');
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = `${import.meta.env.VITE_API_URL}/todos/`;
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 

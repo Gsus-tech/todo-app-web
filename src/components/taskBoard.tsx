@@ -15,7 +15,7 @@ const KanbanBoard: React.FC = () => {
   const [movingTodo, setMovingTodo] = useState<string | null>(null); // To add effect when moving
   const [loading, setLoading] = useState<boolean>(true);  // Adds a loading... message when fetching
   const menuRef = useRef<HTMLDivElement | null>(null);
-  const apiUrl = import.meta.env.VITE_API_URL;
+  const apiUrl = `${import.meta.env.VITE_API_URL}/todos/`;
 
   useEffect(() => {
     const fetchTodos = async () => {
