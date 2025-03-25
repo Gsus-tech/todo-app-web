@@ -47,8 +47,7 @@ const Login = () => {
             return;
         }
 
-        console.log('Login successful:');
-        console.log('token:', data.token);
+        console.log('Login successful');
         
         // Save the token to localStorage or sessionStorage
         localStorage.setItem('token', data.token);
