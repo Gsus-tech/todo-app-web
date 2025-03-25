@@ -6,13 +6,14 @@ const Login = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        navigate("/");
-      } else {
-        setIsAuthenticated(true);
-      }
-    }, [navigate]);
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsAuthenticated(true);
+      setTimeout(() => navigate("/"), 0);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [navigate]);
 
     if (!isAuthenticated) {
       return null;
